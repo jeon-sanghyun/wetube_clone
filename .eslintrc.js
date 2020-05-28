@@ -16,7 +16,7 @@ module.exports = {
   },
   rules: {
     "no-console": "off",
-    "spaced-comment": "off",
-    "no-else-return": "off",
+    // "spaced-comment": "off",
+    // "no-else-return": "off",
   },
 };

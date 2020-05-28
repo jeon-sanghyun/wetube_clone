@@ -352,7 +352,8 @@ button {
 
 .videoBlock video {
   margin-bottom: 10px;
-  max-width: 100%; }
+  max-width: 100%;
+  width: 2000px; }
 
 .videoBlock .videoBlock__title {
   font-size: 18px;
