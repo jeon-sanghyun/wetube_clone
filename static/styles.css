@@ -226,6 +226,10 @@ input {
 button {
   cursor: pointer; }
 
+a:visited {
+  text-decoration: none;
+  color: inherit; }
+
 .header {
   background-color: #ea232c;
   margin-bottom: 50px; }
