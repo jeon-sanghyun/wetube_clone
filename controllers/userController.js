@@ -88,7 +88,7 @@ export const facebookLoginCallback = async (_, __, profile, cb) => {
     });
     return cb(null, newUser);
   } catch (error) {
-    cb(error);
+    return cb(error);
   }
 };
 
