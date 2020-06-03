@@ -48,18 +48,17 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     if (user) {
       user.githubId = id;
       user.save();
-      return cd(null, user);
-    } else {
-      const newUser = await User.create({
-        email,
-        name,
-        githubId: id,
-        avatarUrl,
-      });
-      return cd(null, newUser);
+      return cb(null, user);
     }
+    const newUser = await User.create({
+      email,
+      name,
+      githubId: id,
+      avatarUrl,
+    });
+    return cb(null, newUser);
   } catch (error) {
-    return cd(error);
+    return cb(error);
   }
 };
 
@@ -69,13 +68,28 @@ export const postGithubLogin = (req, res) => {
 
 export const facebookLogin = passport.authenticate("facebook");
 
-export const facebookLoginCallback = (
-  accessToken,
-  refreshToken,
-  profile,
-  cb
-) => {
-  console.log(accessToken, refreshToken, profile, cb);
+export const facebookLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, name, email },
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.facebookId = id;
+      user.avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      facebookId: id,
+      avatarUrl: `https://graph.facebook.com/${id}/picture?type=large`,
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    cb(error);
+  }
 };
 
 export const postFacebookLogin = (req, res) => {
